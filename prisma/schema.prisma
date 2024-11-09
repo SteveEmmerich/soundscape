@@ -1,0 +1,125 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["audio", "analysis", "documents", "embeddings"]
+}
+
+model AudioTrack {
+  id        String   @id @default(uuid())
+  filename  String
+  duration  Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // Track metadata
+  title     String?
+  artist    String?
+  album     String?
+
+  year      Int?
+  // Audio
+  features AudioFeature?
+
+  @@schema("audio")
+}
+
+model AudioFeature {
+  id        String   @id @default(uuid())
+  trackId   String   @unique
+  track     AudioTrack @relation(fields: [trackId], references: [id])
+  features  Unsupported("vector(1536)")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@schema("audio")
+}
+
+model GenreAnalysis {
+  id        String   @id @default(uuid())
+  trackId   String
+  genre     String
+  confidence Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@schema("analysis")
+}
+
+model MoodAnalysis {
+  id        String   @id @default(uuid())
+  trackId   String
+  mood      String
+  confidence Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@schema("analysis")
+}
+
+model TempoAnalysis {
+  id        String   @id @default(uuid())
+  trackId   String
+  tempo     Float
+  confidence Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@schema("analysis")
+}
+
+model KeyAnalysis {
+  id        String   @id @default(uuid())
+  trackId   String
+  key       String
+  confidence Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@schema("analysis")
+}
+
+model TimeSignatureAnalysis {
+  id        String   @id @default(uuid())
+  trackId   String
+  timeSignature Int
+  confidence Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@schema("analysis")
+}
+
+model AudioAnalysis {
+  id                String   @id @default(uuid())
+  trackId           String
+  genreAnalysis     GenreAnalysis?
+  moodAnalysis      MoodAnalysis?
+  tempoAnalysis     TempoAnalysis?
+  keyAnalysis       KeyAnalysis?
+  timeSignatureAnalysis TimeSignatureAnalysis?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@schema("analysis")
+}
+
+model Document {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+
+@@schema("documents")
+}
+
+model DocumentEmbeddings {
+  id        Int      @id @default(autoincrement())
+  document_id Int
+  chunk     String
+  embedding Unsupported("vector(768)")
+
+  @@schema("embeddings")
+}
