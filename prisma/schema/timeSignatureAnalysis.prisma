@@ -1,0 +1,9 @@
+model TimeSignatureAnalysis {
+  id        String   @id @default(uuid())
+  timeSignature Int
+  confidence Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  audioAnalysis AudioAnalysis @relation(fields: [id], references: [id], onDelete: Cascade)
+
+}

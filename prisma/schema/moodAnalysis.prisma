@@ -1,0 +1,12 @@
+model MoodAnalysis {
+  id        String   @id @default(uuid())
+  trackId   String
+  mood      String
+  confidence Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  audioAnalysis AudioAnalysis @relation(fields: [id], references: [id], onDelete: Cascade)
+
+}

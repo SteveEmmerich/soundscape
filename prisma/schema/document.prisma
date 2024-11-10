@@ -1,0 +1,19 @@
+model Document {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  embeddings DocumentEmbeddings[]
+}
+
+model DocumentEmbeddings {
+  id          Int      @id @default(autoincrement())
+  document_id Int
+  chunk       String
+  embedding   Unsupported("vector(768)")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  document    Document @relation(fields: [document_id], references: [id], onDelete: Cascade)
+}

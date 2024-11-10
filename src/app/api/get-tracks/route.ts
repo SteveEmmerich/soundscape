@@ -1,9 +1,7 @@
-import { NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/lib/prisma';
+import { NextRequest, NextResponse } from 'next/server';
 
-const prisma = new PrismaClient()
-
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     const tracks = await prisma.audioTrack.findMany({
       select: {
@@ -11,13 +9,17 @@ export async function GET() {
         title: true,
         filename: true,
       },
-    })
+    });
 
-    return NextResponse.json(tracks)
+    if (tracks.length === 0) {
+      return NextResponse.json({ message: 'No tracks found' }, { status: 404 });
+    }
+
+    return NextResponse.json(tracks);
   } catch (error) {
-    console.error('Error:', error)
-    return NextResponse.json({ error: 'An error occurred while fetching tracks' }, { status: 500 })
+    console.error('Error fetching tracks:', error);
+    return NextResponse.json({ error: 'Failed to fetch tracks' }, { status: 500 });
   } finally {
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   }
 }

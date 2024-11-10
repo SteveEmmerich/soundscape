@@ -1,0 +1,11 @@
+
+model AudioFeature {
+  id        String   @id @default(uuid())
+  trackId   String   @unique
+  track     AudioTrack  @relation(fields: [trackId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  features  Unsupported("vector(1536)")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+}
