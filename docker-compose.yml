@@ -13,8 +13,14 @@ services:
     image: ollama/ollama:latest
     ports:
       - "11434:11434"
+    container_name: ollama
+    pull_policy: always
     volumes:
       - ollama_data:/root/.ollama
+  vectorizer-worker:
+    image: timescale/pgai-vectorizer-worker:0.1.0
+    environment:
+      PGAI_VECTORIZER_WORKER_DB_URL: postgres://postgres:postgres@db:5432/postgres
 volumes:
   postgres:
   ollama_data:
