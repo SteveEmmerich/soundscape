@@ -17,13 +17,7 @@ export function PageTitle({ children, subtitle }: PageTitleProps) {
       className="text-center mb-12"
     >
       <motion.h1 
-        className="text-5xl font-extrabold mb-4 bg-clip-text text-transparent"
-        style={{
-          backgroundImage: 'linear-gradient(90deg, var(--primary) 0%, var(--secondary) 50%, var(--primary) 100%)',
-          backgroundSize: '200% 100%',
-          backgroundPosition: '0% 50%',
-          animation: 'gradientAnimation 5s ease-in-out infinite',
-        }}
+        className="text-5xl font-extrabold mb-4 gradient-text"
       >
         {children}
       </motion.h1>
@@ -37,13 +31,6 @@ export function PageTitle({ children, subtitle }: PageTitleProps) {
           {subtitle}
         </motion.p>
       )}
-      <style jsx global>{`
-        @keyframes gradientAnimation {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-      `}</style>
     </motion.div>
   )
 }

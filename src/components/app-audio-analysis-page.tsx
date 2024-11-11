@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Loader2, BarChart, Upload } from "lucide-react"
 import { motion } from "framer-motion"
 import { AudioVisualization } from '@/components/AudioVisualization'
+import { PageTitle } from './PageTitle'
 
 export function BlockPage() {
   const [file, setFile] = useState<File | null>(null)
@@ -67,9 +68,9 @@ export function BlockPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gradient-to-b from-primary/20 to-background">
-      <h1 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+      <PageTitle>
         AI Audio Analysis
-      </h1>
+      </PageTitle>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
