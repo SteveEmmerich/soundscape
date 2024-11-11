@@ -8,5 +8,5 @@ model MoodAnalysis {
 
 
   audioAnalysis AudioAnalysis @relation(fields: [id], references: [id], onDelete: Cascade)
-
+@@map("mood_analysis")
 }

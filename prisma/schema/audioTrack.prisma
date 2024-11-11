@@ -13,5 +13,5 @@ model AudioTrack {
   // Audio
   features AudioFeature?
   analysis   AudioAnalysis?
-
+ @@map("audio_track")
 }

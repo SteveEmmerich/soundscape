@@ -19,9 +19,10 @@ export function PageTitle({ children, subtitle }: PageTitleProps) {
       <motion.h1 
         className="text-5xl font-extrabold mb-4 bg-clip-text text-transparent"
         style={{
-          backgroundImage: 'linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%)',
+          backgroundImage: 'linear-gradient(90deg, var(--primary) 0%, var(--secondary) 50%, var(--primary) 100%)',
           backgroundSize: '200% 100%',
-          animation: 'gradientAnimation 5s linear infinite',
+          backgroundPosition: '0% 50%',
+          animation: 'gradientAnimation 5s ease-in-out infinite',
         }}
       >
         {children}

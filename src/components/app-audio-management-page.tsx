@@ -91,13 +91,13 @@ export function BlockPage() {
     }
   }
 
-  const handleAnalyze = async (trackId: string) => {
+  const handleAnalyze = async (trackId: string, filename: string) => {
     setIsAnalyzing(true)
     try {
       const response = await fetch('/api/analyze-audio', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ trackId }),
+        body: JSON.stringify({ trackId, filename }),
       })
 
       if (!response.ok) throw new Error('Failed to analyze audio')
@@ -200,7 +200,7 @@ export function BlockPage() {
                     </TableCell>
                     <TableCell>
                       <Button
-                        onClick={() => handleAnalyze(track.id)}
+                        onClick={() => handleAnalyze(track.id, track.filename)}
                         disabled={isAnalyzing}
                         size="sm"
                       >

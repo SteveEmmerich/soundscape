@@ -4,14 +4,14 @@ import { analyzeAudio } from '@/lib/analyze-audio';
 
 export async function POST(req: NextRequest) {
   try {
-    const { trackId } = await req.json();
+    const { trackId, filename } = await req.json();
 
-    if (!trackId) {
+    if (!trackId || !filename) {
       return NextResponse.json({ error: 'Track ID is required' }, { status: 400 });
     }
 
     // Perform audio analysis (this is a placeholder function)
-    const analysisResult = await analyzeAudio(trackId);
+    const analysisResult = await analyzeAudio(filename);
 
     // Create or update the AudioAnalysis record
     const audioAnalysis = await prisma.audioAnalysis.upsert({

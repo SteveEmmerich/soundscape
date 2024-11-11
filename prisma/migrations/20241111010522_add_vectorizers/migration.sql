@@ -12,7 +12,7 @@ SELECT ai.create_vectorizer(
 SELECT ai.create_vectorizer(   
   'audio_track'::regclass,
   destination => 'audio_track_embeddings',
-  embedding => ai.embedding_ollama('text-embedding-3-small', 768),
+  embedding => ai.embedding_openai('text-embedding-3-small', 768),
   chunking => ai.chunking_recursive_character_text_splitter('title'),
   formatting => ai.formatting_python_template('$title: $chunk')
 );
@@ -21,8 +21,8 @@ SELECT ai.create_vectorizer(
 SELECT ai.create_vectorizer(   
   'audio_feature'::regclass,
   destination => 'audio_feature_embeddings',
-  embedding => ai.embedding_ollama('text-embedding-3-small', 768),
-  chunking => ai.chunking_recursive_character_text_splitter('features'),
+  embedding => ai.embedding_openai('text-embedding-3-small', 768),
+ chunking => ai.chunking_recursive_character_text_splitter('trackId'),
   formatting => ai.formatting_python_template('$trackId: $chunk')
 );
 
@@ -30,7 +30,7 @@ SELECT ai.create_vectorizer(
 SELECT ai.create_vectorizer(   
   'audio_analysis'::regclass,
   destination => 'audio_analysis_embeddings',
-  embedding => ai.embedding_ollama('text-embedding-3-small', 768),
+  embedding => ai.embedding_openai('text-embedding-3-small', 768),
   chunking => ai.chunking_recursive_character_text_splitter('trackId'),
   formatting => ai.formatting_python_template('$trackId: $chunk')
 );
@@ -99,28 +99,4 @@ AFTER INSERT OR UPDATE ON "audio_analysis"
 FOR EACH ROW
 EXECUTE FUNCTION update_audio_analysis_embedding();
 
--- (Optional) Create indexes for efficient similarity searches
-
--- Index for Document embeddings
-CREATE INDEX IF NOT EXISTS idx_document_embeddings_embedding
-ON "document_embeddings"
-USING ivfflat (embedding vector_l2_ops)
-WITH (lists = 100);
-
--- Index for AudioTrack embeddings
-CREATE INDEX IF NOT EXISTS idx_audio_track_embeddings_embedding
-ON "audio_track_embeddings"
-USING ivfflat (embedding vector_l2_ops)
-WITH (lists = 100);
-
--- Index for AudioFeature embeddings
-CREATE INDEX IF NOT EXISTS idx_audio_feature_embeddings_embedding
-ON "audio_feature_embeddings"
-USING ivfflat (embedding vector_l2_ops)
-WITH (lists = 100);
-
--- Create index for AudioAnalysis embeddings
-CREATE INDEX IF NOT EXISTS idx_audio_analysis_embeddings_embedding
-ON "audio_analysis_embeddings"
-USING ivfflat (embedding vector_l2_ops)
-WITH (lists = 100);
+-- (Optional) Create indexes for efficient similarity search

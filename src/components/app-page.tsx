@@ -9,7 +9,7 @@ export function BlockPage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gradient-to-b from-primary/20 to-background">
       <h1 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
-        Welcome to Widdle AI
+        Welcome to Sound Scape
       </h1>
       <p className="text-xl mb-12 text-center max-w-2xl">
         Explore the power of AI in music analysis, generation, mashup creation, and audio discussions.

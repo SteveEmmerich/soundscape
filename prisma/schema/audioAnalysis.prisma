@@ -9,4 +9,5 @@ model AudioAnalysis {
   createdAt                    DateTime              @default(now())
   updatedAt                    DateTime              @updatedAt
   audioTrack AudioTrack                              @relation(fields: [trackId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+ @@map("audio_analysis")
 }

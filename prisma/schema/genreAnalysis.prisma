@@ -7,5 +7,5 @@ model GenreAnalysis {
   updatedAt DateTime @updatedAt
 
   audioAnalysis AudioAnalysis @relation(fields: [id], references: [id], onDelete: Cascade)
-
+@@map("genre_analysis")
 }
